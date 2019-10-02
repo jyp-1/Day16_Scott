@@ -37,7 +37,7 @@ public class BonusInput {
 
 	}
 
-	public String bonusInput() {
+	public String bonusInfo() {
 		String ename = null;
 		System.out.println("사원 이름을 입력");
 		ename = sc.next();

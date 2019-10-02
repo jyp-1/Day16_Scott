@@ -95,100 +95,59 @@ public class SalgradeDAO {
 				salDTO.setHisal(rs.getInt("losal"));
 				salDTO.setLosal(rs.getInt("hisal"));
 				ar.add(salDTO);
-
 			}
-
 		} catch (Exception e) {
-
 			// TODO Auto-generated catch block
-
 			e.printStackTrace();
-
 		} finally {
-
 			try {
-
 				rs.close();
-
 				st.close();
-
 			} catch (SQLException e) {
-
 				// TODO Auto-generated catch block
-
 				e.printStackTrace();
-
 			}
-
 		}
 		return ar;
-
 	}
 
 	// 검색 조회
 
 	public SalDTO getSalgradeOne(int grade) {
-
 		Connection con = null;
-
 		PreparedStatement st = null;
-
 		ResultSet rs = null;
-
 		SalDTO salDTO = null;
-
 		try {
-
 			con = DBConnector.getConnect();
-
 			String sql = "select* from salgrade "
-
 					+ "where grade = ? ";
 
 			st = con.prepareStatement(sql);
-
 			st.setInt(1, grade);
-
 			rs = st.executeQuery();
-
 			if (rs.next()) {
-
 				salDTO = new SalDTO();
-
 				salDTO.setGrade(rs.getInt("grade"));
-
 				salDTO.setHisal(rs.getInt("losal"));
-
 				salDTO.setLosal(rs.getInt("hisal"));
-
 			}
 
 		} catch (Exception e) {
-
 			// TODO Auto-generated catch block
-
 			e.printStackTrace();
-
 		} finally {
-
 			try {
-
 				rs.close();
 
 				st.close();
 
 				con.close();
-
 			} catch (SQLException e) {
-
 				// TODO Auto-generated catch block
-
 				e.printStackTrace();
-
 			}
-
 		}
-
 		return salDTO;
 
 	}
