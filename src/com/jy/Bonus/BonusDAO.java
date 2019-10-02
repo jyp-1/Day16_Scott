@@ -55,6 +55,15 @@ public class BonusDAO {
 			st = con.prepareStatement(sql); // 미리보내주기
 			rs = st.executeQuery();
 
+			while (rs.next()) {
+				BonusDTO bonusDTO = new BonusDTO();
+				bonusDTO.setEname(rs.getString("ename"));
+				bonusDTO.setJob(rs.getString("job"));
+				bonusDTO.setSal(rs.getInt("sal"));
+				bonusDTO.setComm(rs.getInt("comm"));
+				ar.add(bonusDTO);
+			}
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

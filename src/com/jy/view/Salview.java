@@ -5,17 +5,13 @@ import java.util.List;
 import com.jy.Sal.SalDTO;
 
 public class Salview {
-	
+
 	public void view(List<SalDTO> ar) {
-		for(SalDTO salDTO : ar) {
+		for (SalDTO salDTO : ar) {
 			this.view(salDTO);
 		}
-		
-		
+
 	}
-	
-	
-	
 
 	public void view(SalDTO salDTO) {
 		System.out.println("-------------------------------------");
