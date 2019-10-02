@@ -15,6 +15,7 @@ public class BonusController {
 	private BonusDAO bonusDAO;
 	private BonusView bonusView;
 	private BonusInput bonusInput;
+	private String ename;
 
 	public BonusController() {
 		sc = new Scanner(System.in);
@@ -38,6 +39,13 @@ public class BonusController {
 
 			switch (select) {
 			case 1:
+				BonusDTO bonusDTO = bonusInput.insert();
+				select = bonusDAO.insert(bonusDTO);
+				String s = "사원정보 추가 실패";
+				if (select > 0) {
+					s = "사원추가 성공";
+				}
+				bonusView.view(s);
 
 				break;
 
@@ -52,13 +60,23 @@ public class BonusController {
 				break;
 
 			case 3:
-				String ename = bonusInput.bonusInfo();
-				BonusDTO bonusDTO = bonusDAO.bonSelectone(ename);
-				if (bonusDTO != null) {
-					bonusView.view(bonusDTO);
+				String str = bonusInput.bonusInfo();
+				BonusDTO bonusDTO2 = bonusDAO.bonSelectone(str);
+				if (bonusDTO2 != null) {
+					bonusView.view(bonusDTO2);
 				} else {
 					bonusView.view("없는 사람입니다.");
 				}
+				break;
+
+			case 4:
+				select = bonusDAO.bondelete(ename);
+				String d = "삭제 실패";
+				if (select > 0) {
+					d = "삭제 성공";
+				}
+				bonusView.view(d);
+
 				break;
 
 			default:
