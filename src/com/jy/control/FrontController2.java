@@ -19,14 +19,14 @@ public class FrontController2 {
 
 			switch (select) {
 			case 1:
-				BonusController bonusController = new BonusController();
-				bonusController.start();
-
+				SalgradeController salgradeController = new SalgradeController();
+				salgradeController.start();
 				break;
 
 			case 2:
-				SalgradeController salgradeController = new SalgradeController();
-				salgradeController.start();
+
+				BonusController bonusController = new BonusController();
+				bonusController.start();
 
 				break;
 

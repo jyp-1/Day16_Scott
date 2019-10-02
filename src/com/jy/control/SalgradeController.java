@@ -83,6 +83,7 @@ public class SalgradeController {
 					salView.view("없는 사원 번호입니다.");
 
 				}
+				break;
 
 			case 3:
 
