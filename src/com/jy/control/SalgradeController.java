@@ -5,6 +5,8 @@ import java.util.Scanner;
 
 import com.jy.Sal.SalDTO;
 import com.jy.Sal.SalgradeDAO;
+import com.jy.input.SalInput;
+import com.jy.view.Salview;
 
 public class SalgradeController {
 
@@ -12,11 +14,19 @@ public class SalgradeController {
 
 	private SalgradeDAO salDAO;
 
+	private Salview salView;
+
+	private SalInput salInput;
+
 	public SalgradeController() {
 
 		sc = new Scanner(System.in);
 
 		salDAO = new SalgradeDAO();
+
+		salView = new Salview();
+
+		salInput = new SalInput();
 
 	}
 
@@ -48,7 +58,11 @@ public class SalgradeController {
 
 				if (ar.size() > 0) {
 
+					salView.view(ar);
+
 				} else {
+
+					salView.view("데이터가 없습니다.");
 
 				}
 
@@ -56,7 +70,25 @@ public class SalgradeController {
 
 			case 2:
 
+				select = salInput.gradeinput();
+
+				SalDTO salgradeDTO = salDAO.getSalgradeOne(select);
+
+				if (salgradeDTO != null) {
+
+					salView.view(salgradeDTO);
+
+				} else {
+
+					salView.view("없는 사원 번호입니다.");
+
+				}
+
 			case 3:
+
+				SalDTO salgradeDTO2 = salInput.insert();
+
+				select = salDAO.salInsert(salgradeDTO2);
 
 				String s = "Insert Fail";
 
@@ -66,10 +98,14 @@ public class SalgradeController {
 
 				}
 
+				salView.view(s);
+
 				break;
 
 			case 4:
-
+					
+				break;
+				
 			default:
 
 				check = !check;
@@ -79,5 +115,4 @@ public class SalgradeController {
 		}
 
 	}
-
 }
