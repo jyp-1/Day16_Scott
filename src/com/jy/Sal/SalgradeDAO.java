@@ -1,148 +1,240 @@
-package com.jy.Bonus;
+package com.jy.Sal;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 import com.jy.utill.DBConnector;
 
-public class BonusDAO {
+public class SalgradeDAO {
 
-	// bondelete - 정보 삭제
+	public int saldelete(int grade) {
 
-	public int bondelete(String ename) {
 		Connection con = null;
+
 		PreparedStatement st = null;
+
 		int result = 0;
 
 		try {
+
 			con = DBConnector.getConnect();
-			String sql = "delete bonus where ename=?";
+
+			String sql = "delete salgrade where grade = ? ";
+
 			st = con.prepareStatement(sql);
-			st.setString(1, ename);
+
+			st.setInt(1, grade);
+
 			result = st.executeUpdate();
 
 		} catch (Exception e) {
+
 			// TODO Auto-generated catch block
+
 			e.printStackTrace();
+
 		} finally {
+
 			try {
+
 				st.close();
+
 				con.close();
+
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
+
 			}
+
 		}
+
 		return result;
+
 	}
 
-	// bonSelectlist -전체조회
+	public int salInsert(SalDTO salDTO) {
 
-	public List<BonusDTO> bonSelectlist() {
-		ArrayList<BonusDTO> ar = new ArrayList<BonusDTO>();
 		Connection con = null;
+
 		PreparedStatement st = null;
-		ResultSet rs = null;
+
+		int result = 0;
 
 		try {
-			con = DBConnector.getConnect();
-			String sql = "select * from Bonus";
 
-			st = con.prepareStatement(sql); // 미리보내주기
-			rs = st.executeQuery();
+			con = DBConnector.getConnect();
+
+			String sql = "insert into sagrade (grade, losal, hisal) "
+
+					+ "+values (?,?,?)";
+
+			st = con.prepareStatement(sql);
+
+			st.setInt(1, salDTO.getGrade());
+
+			st.setInt(2, salDTO.getLosal());
+
+			st.setInt(3, salDTO.getHisal());
+
+			result = st.executeUpdate();
 
 		} catch (Exception e) {
+
 			// TODO Auto-generated catch block
+
 			e.printStackTrace();
+
 		} finally {
+
 			try {
-				rs.close();
+
 				st.close();
+
+				con.close();
+
 			} catch (SQLException e) {
+
 				// TODO Auto-generated catch block
+
 				e.printStackTrace();
+
 			}
+
 		}
-		return ar;
+		return result;
+
 	}
 
-	// bonSelectone - 정보 검색
+	public ArrayList<SalDTO> getSalectList() {
 
-	public BonusDTO bonSelectone(String ename) {
-		BonusDTO bonusDTO = null;
 		Connection con = null;
+
 		PreparedStatement st = null;
+
 		ResultSet rs = null;
 
+		ArrayList<SalDTO> ar = new ArrayList<SalDTO>();
+
 		try {
+
 			con = DBConnector.getConnect();
-			String sql = "select sal from bonus where ename=?";
+
+			String sql = "select grade, losal, hisal "
+
+					+ "from salgrade";
+
 			st = con.prepareStatement(sql);
-			st.setString(1, ename);
+
+			rs = st.executeQuery();
+
+			while (rs.next()) {
+
+				SalDTO salDTO = new SalDTO();
+
+				salDTO.setGrade(rs.getInt("grade"));
+
+				salDTO.setHisal(rs.getInt("losal"));
+
+				salDTO.setLosal(rs.getInt("hisal"));
+
+				ar.add(salDTO);
+
+			}
+
+		} catch (Exception e) {
+
+			// TODO Auto-generated catch block
+
+			e.printStackTrace();
+
+		} finally {
+
+			try {
+
+				rs.close();
+
+				st.close();
+
+			} catch (SQLException e) {
+
+				// TODO Auto-generated catch block
+
+				e.printStackTrace();
+
+			}
+
+		}
+		return ar;
+
+	}
+
+	public SalDTO getSalgradeOne(int grade) {
+
+		Connection con = null;
+
+		PreparedStatement st = null;
+
+		ResultSet rs = null;
+
+		SalDTO salDTO = null;
+
+		try {
+
+			con = DBConnector.getConnect();
+
+			String sql = "select* from salgrade "
+
+					+ "where grade = ? ";
+
+			st = con.prepareStatement(sql);
+
+			st.setInt(1, grade);
+
 			rs = st.executeQuery();
 
 			if (rs.next()) {
-				bonusDTO = new BonusDTO();
-				bonusDTO.setEname(rs.getString("ename"));
-				bonusDTO.setJob(rs.getString("job"));
-				bonusDTO.setSal(rs.getInt("sal"));
-				bonusDTO.setComm(rs.getInt("comm"));
+
+				salDTO = new SalDTO();
+
+				salDTO.setGrade(rs.getInt("grade"));
+
+				salDTO.setHisal(rs.getInt("losal"));
+
+				salDTO.setLosal(rs.getInt("hisal"));
+
 			}
 
 		} catch (Exception e) {
+
 			// TODO Auto-generated catch block
+
 			e.printStackTrace();
+
 		} finally {
+
 			try {
+
 				rs.close();
+
 				st.close();
+
 				con.close();
+
 			} catch (SQLException e) {
+
 				// TODO Auto-generated catch block
+
 				e.printStackTrace();
-			}
-		}
-		return bonusDTO;
 
-	}
-
-	// 정보 입력 insert
-
-	public int insert(BonusDTO bonusDTO) {
-
-		Connection con = null;
-		PreparedStatement st = null;
-		int result = 0;
-
-		try {
-			con = DBConnector.getConnect();
-			String sql = "insert into bonus (ename,job,sal,comm) values (?,?,?,?)";
-			st = con.prepareStatement(sql);
-			st.setString(1, bonusDTO.getEname());
-			st.setString(2, bonusDTO.getJob());
-			st.setInt(3, bonusDTO.getSal());
-			st.setInt(4, bonusDTO.getComm());
-
-			result = st.executeUpdate();
-
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			try {
-				st.close();
-				con.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
 
 		}
-		return result;
+
+		return salDTO;
 
 	}
 
