@@ -92,8 +92,8 @@ public class SalgradeDAO {
 			while (rs.next()) {
 				SalDTO salDTO = new SalDTO();
 				salDTO.setGrade(rs.getInt("grade"));
-				salDTO.setHisal(rs.getInt("losal"));
-				salDTO.setLosal(rs.getInt("hisal"));
+				salDTO.setLosal(rs.getInt("losal"));
+				salDTO.setHisal(rs.getInt("hisal"));
 				ar.add(salDTO);
 			}
 		} catch (Exception e) {
@@ -129,8 +129,8 @@ public class SalgradeDAO {
 			if (rs.next()) {
 				salDTO = new SalDTO();
 				salDTO.setGrade(rs.getInt("grade"));
-				salDTO.setHisal(rs.getInt("losal"));
-				salDTO.setLosal(rs.getInt("hisal"));
+				salDTO.setLosal(rs.getInt("losal"));
+				salDTO.setHisal(rs.getInt("hisal"));
 			}
 
 		} catch (Exception e) {

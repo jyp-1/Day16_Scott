@@ -20,6 +20,7 @@ public class BonusController {
 	public BonusController() {
 		sc = new Scanner(System.in);
 		bonusDTO = new BonusDTO();
+		bonusDAO = new BonusDAO();
 		bonusView = new BonusView();
 		bonusInput = new BonusInput();
 
@@ -30,26 +31,17 @@ public class BonusController {
 		boolean check = true;
 
 		while (check) {
-			System.out.println("1. 정보 입력");
-			System.out.println("2. 전체 조회");
-			System.out.println("3. 검색 조회");
+			System.out.println("1. 전체조회");
+			System.out.println("2. 검색조회");
+			System.out.println("3. 정보 추가");
 			System.out.println("4. 정보 삭제");
-			System.out.println("4. 종료");
+			System.out.println("5. 종료");
 			int select = sc.nextInt();
 
 			switch (select) {
 			case 1:
-				BonusDTO bonusDTO = bonusInput.insert();
-				select = bonusDAO.insert(bonusDTO);
-				String s = "사원정보 추가 실패";
-				if (select > 0) {
-					s = "사원추가 성공";
-				}
-				bonusView.view(s);
-
-				break;
-
-			case 2:
+				
+				
 				List<BonusDTO> ar = bonusDAO.bonSelectlist();
 				if (ar.size() > 0) {
 					bonusView.view(ar);
@@ -59,7 +51,8 @@ public class BonusController {
 
 				break;
 
-			case 3:
+			case 2:
+				
 				String str = bonusInput.bonusInfo();
 				BonusDTO bonusDTO2 = bonusDAO.bonSelectone(str);
 				if (bonusDTO2 != null) {
@@ -69,8 +62,19 @@ public class BonusController {
 				}
 				break;
 
+			case 3:
+				BonusDTO bonusDTO = bonusInput.insert();
+				select = bonusDAO.insert(bonusDTO);
+				String s = "사원정보 추가 실패";
+				if (select > 0) {
+					s = "사원추가 성공";
+				}
+				bonusView.view(s);
+				break;
+
 			case 4:
-				select = bonusDAO.bondelete(ename);
+				str = bonusInput.bonusInfo();
+				select = bonusDAO.bondelete(str);
 				String d = "삭제 실패";
 				if (select > 0) {
 					d = "삭제 성공";
@@ -80,6 +84,7 @@ public class BonusController {
 				break;
 
 			default:
+				check=!check;
 
 			}
 

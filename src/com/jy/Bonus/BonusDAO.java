@@ -43,10 +43,11 @@ public class BonusDAO {
 	// bonSelectlist -전체조회
 
 	public List<BonusDTO> bonSelectlist() {
-		ArrayList<BonusDTO> ar = new ArrayList<BonusDTO>();
 		Connection con = null;
 		PreparedStatement st = null;
 		ResultSet rs = null;
+		BonusDTO bonusDTO = null;
+		ArrayList<BonusDTO> ar = new ArrayList<BonusDTO>();
 
 		try {
 			con = DBConnector.getConnect();
@@ -56,7 +57,7 @@ public class BonusDAO {
 			rs = st.executeQuery();
 
 			while (rs.next()) {
-				BonusDTO bonusDTO = new BonusDTO();
+				bonusDTO = new BonusDTO();
 				bonusDTO.setEname(rs.getString("ename"));
 				bonusDTO.setJob(rs.getString("job"));
 				bonusDTO.setSal(rs.getInt("sal"));
