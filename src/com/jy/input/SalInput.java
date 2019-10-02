@@ -14,6 +14,9 @@ public class SalInput {
 	public SalInput() {
 		sc = new Scanner(System.in);
 	}
+	
+	
+	
 
 	// 등급 급여 입력하기
 

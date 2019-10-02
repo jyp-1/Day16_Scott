@@ -12,12 +12,33 @@ import com.jy.utill.DBConnector;
 public class BonusDAO {
 
 	// bondelete - 정보 삭제
-	
-	
-	
-	
-	
-	
+
+	public int bondelete(String ename) {
+		Connection con = null;
+		PreparedStatement st = null;
+		int result =0;
+
+		try {
+			con = DBConnector.getConnect();
+			String sql = "delete bonus where ename=?";
+			st = con.prepareStatement(sql);
+			st.setString(1, ename);
+			result = st.executeUpdate();
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				st.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+			return result;
+	}
 
 	// bonSelectlist -전체조회
 
@@ -52,7 +73,7 @@ public class BonusDAO {
 	// bonSelectone - 정보 검색
 
 	public BonusDTO bonSelectone(String ename) {
-		BonusDTO bonusDTO=null;
+		BonusDTO bonusDTO = null;
 		Connection con = null;
 		PreparedStatement st = null;
 		ResultSet rs = null;
@@ -75,7 +96,7 @@ public class BonusDAO {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			try {
 				rs.close();
 				st.close();
@@ -86,7 +107,7 @@ public class BonusDAO {
 			}
 		}
 		return bonusDTO;
-			
+
 	}
 
 }
